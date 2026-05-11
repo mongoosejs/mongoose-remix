@@ -21,16 +21,7 @@ const app = run({
 document.addEventListener(
   'submit',
   async (event) => {
-    let form = event.target
-    if (!(form instanceof HTMLFormElement)) {
-      return
-    }
-
-    let frame = form.dataset.remixFrame
-    if (!frame) {
-      return
-    }
-
+    let form = event.target as HTMLFormElement
     event.preventDefault()
 
     let response = await fetch(form.action, {
@@ -43,6 +34,7 @@ document.addEventListener(
     })
 
     if (!response.ok && response.type !== 'opaqueredirect') {
+      window.alert(await response.text())
       return
     }
 

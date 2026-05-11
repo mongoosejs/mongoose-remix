@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch server.ts",
+    "studio": "tsx studio.ts",
     "start": "tsx server.ts",
     "test": "tsx --test",
     "typecheck": "tsc --noEmit"
@@ -12,12 +13,15 @@
     "node": ">=24.3.0"
   },
   "dependencies": {
-    "mongoose": "file:../mongoose",
+    "@mongoosejs/studio": "^0.5.1",
+    "mongoose": "9.6.x",
     "remix": "^3.0.0-beta.0",
     "tsx": "latest"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "latest",
+    "express": "^4.22.2",
     "typescript": "latest"
   }
 }

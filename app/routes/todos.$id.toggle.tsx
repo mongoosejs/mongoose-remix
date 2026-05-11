@@ -1,19 +1,21 @@
-import mongoose from 'mongoose'
-
 import { Todo } from '../models/todo.ts'
-import { actionComplete } from './todos.tsx'
+import { actionComplete, actionError } from './todos.tsx'
 
 export async function toggleTodo(request: Request, params: { id: string }) {
-  if (!mongoose.isValidObjectId(params.id)) {
-    return actionComplete(request)
-  }
+  try {
+    const todo = await Todo.findById(params.id).orFail()
 
-  const todo = await Todo.findById(params.id)
+    if (todo.status === 'created') {
+      todo.status = 'done'
+    } else if (todo.status === 'done') {
+      todo.status = 'created'
+    }
 
-  if (todo) {
-    todo.status = todo.status === 'done' ? 'created' : 'done'
     await todo.save()
-  }
 
-  return actionComplete(request)
+    return actionComplete(request)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    return actionError(request, message)
+  }
 }

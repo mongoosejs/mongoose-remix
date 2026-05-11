@@ -36,3 +36,21 @@ export function actionComplete(request: Request) {
 
   return Response.redirect(new URL('/todos', request.url))
 }
+
+export function actionError(request: Request, message: string, status = 500) {
+  if (request.headers.has('x-remix-frame-action')) {
+    return new Response(message, {
+      status,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+      },
+    })
+  }
+
+  return new Response(message, {
+    status,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
+  })
+}

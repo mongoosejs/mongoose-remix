@@ -15,9 +15,7 @@ const todoSchema = new Schema(
       default: 'created',
     },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 )
 
 export const Todo = mongoose.model('Todo', todoSchema)
