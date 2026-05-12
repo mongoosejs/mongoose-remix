@@ -47,7 +47,7 @@ document.addEventListener(
       history: 'replace',
       resetScroll: false,
       src: form.dataset.remixFrameSrc ?? window.location.href,
-      target: frame,
+      target: form.dataset!.remixFrame,
     })
   },
   { capture: true },

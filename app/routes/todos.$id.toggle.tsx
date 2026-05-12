@@ -3,13 +3,12 @@ import { actionComplete, actionError } from './todos.tsx'
 
 export async function toggleTodo(request: Request, params: { id: string }) {
   try {
-    const todo = await Todo.findById(params.id).orFail()
+    const formData = await request.formData()
+    const status = formData.get('status')
 
-    if (todo.status === 'created') {
-      todo.status = 'done'
-    } else if (todo.status === 'done') {
-      todo.status = 'created'
-    }
+    const todo = await Todo.findById(params.id).orFail()
+    // @ts-ignore
+    todo.status = status
 
     await todo.save()
 

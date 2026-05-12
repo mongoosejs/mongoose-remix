@@ -51,6 +51,7 @@ export function TodosFrame() {
                 frameSrc={TODOS_FRAME_SRC}
                 reset={false}
               >
+                <input type="hidden" name="status" value={done ? 'created' : 'done'} />
                 <input
                   type="checkbox"
                   checked={done ? true : undefined}

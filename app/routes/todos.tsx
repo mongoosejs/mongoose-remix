@@ -19,14 +19,19 @@ export async function getTodosFrame(request: Request) {
 }
 
 export async function createTodo(request: Request) {
-  const formData = await request.formData()
-  const title = String(formData.get('title') || '').trim()
+  try {
+    const formData = await request.formData()
+    const title = String(formData.get('title') || '').trim()
 
-  if (title) {
-    await Todo.create({ title })
+    if (title) {
+      await Todo.create({ title })
+    }
+
+    return actionComplete(request)
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    return actionError(request, message)
   }
-
-  return actionComplete(request)
 }
 
 export function actionComplete(request: Request) {
